@@ -6,14 +6,21 @@ const morgan = require('morgan');
 app.use(express.json());
 app.use(morgan('combined'));
 app.use(
-    '/auth-service',
+    '/order-service',
     createProxyMiddleware({
         target: 'http://localhost:5000',
         changeOrigin: true,
         pathRewrite: { '/auth-service': '' },
     }),
 );
-
+app.use(
+    '/product-service',
+    createProxyMiddleware({
+        target: 'http://localhost:6000',
+        changeOrigin: true,
+        pathRewrite: { '/product-service': '' },
+    }),
+);
 app.listen(port, async () => {
     try {
         console.log(`Server listening on http://localhost:${port}`);
